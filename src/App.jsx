@@ -5,6 +5,7 @@ import MoodForm from "./components/MoodForm";
 import MoodList from "./components/MoodList";
 import Toast from "./components/Toast";
 import MoodModal from "./components/MoodModal";
+import MoodNavbar from "./components/MoodNavbar";
 function App() {
   const [selectedMood, setSelectedMood] = useState("");
   const [selectedEmoji, setSelectedEmoji] = useState("");
@@ -12,7 +13,11 @@ function App() {
   const [selectedDate, setSelectedDate] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMoodCard,setSelectedMoodCard]=useState(null);
-  const [toast,setToast] = useState({
+  const [selectedFilter, setSelectedFilter] = useState("All");
+
+const [theme, setTheme] = useState(() => {
+  return localStorage.getItem("theme") || "light";
+});  const [toast,setToast] = useState({
     message:"",
     type:"",
   });
@@ -45,6 +50,27 @@ function App() {
         ];
   });
 
+
+  const moodTypes = [
+  "All",
+  "Happy",
+  "Normal",
+  "Sad",
+  "Angry",
+  "Tired",
+  "Stressed",
+];
+
+useEffect(() => {
+  document.body.className = theme;
+
+  localStorage.setItem(
+    "theme",
+    theme
+  );
+}, [theme]);
+
+
   useEffect(() => {
   console.log(selectedMoodCard);
 }, [selectedMoodCard]);
@@ -52,28 +78,39 @@ function App() {
     localStorage.setItem("moods", JSON.stringify(moods));
   }, [moods]);
 
-  useEffect(()=>{ const totalPages = Math.max(1,Math.ceil(moods.length/moodsPerPage));
 
-    if(currentPage>totalPages){
-      setCurrentPage(totalPages);
-    }
-  },[moods,currentPage]);
   
 
   const sortedMoods = [...moods].sort((a,b)=>b.date.localeCompare(a.date));
   const indexOfLastMood=currentPage*moodsPerPage;
   const indexOfFirstMood = indexOfLastMood - moodsPerPage;
 
+   const filteredMoods =
+    selectedFilter === "All"
+    ? sortedMoods
+    : sortedMoods.filter((a)=>a.mood===selectedFilter);
+
+
   const currentMoods =
-  sortedMoods.slice(
+  filteredMoods.slice(
     indexOfFirstMood,
     indexOfLastMood
   );
   
-  const totalPages =
+  const totalPages = Math.max(
+  1,
   Math.ceil(
-    moods.length / moodsPerPage
-  );
+    filteredMoods.length / moodsPerPage
+  )
+);
+
+
+
+   useEffect(() => {
+  if (currentPage > totalPages) {
+    setCurrentPage(totalPages);
+  }
+}, [currentPage, totalPages]);
 
   function showToast(message,type) {
 
@@ -89,6 +126,10 @@ setToast({
   type: "",
 });  }, 3000);
 }
+
+useEffect(() => {
+  setCurrentPage(1);
+}, [selectedFilter]);
 
   function addMood() {
 
@@ -131,6 +172,7 @@ setToast({
       return;
     }
 
+   
     const updatedMoods = moods.filter(
       (mood) => mood.id !== id
     );
@@ -143,6 +185,16 @@ setToast({
   return (
 
     <>
+
+    <MoodNavbar
+  moodTypes={moodTypes}
+  moods={moods}
+  selectedFilter={selectedFilter}
+  setSelectedFilter={setSelectedFilter}
+  setCurrentPage={setCurrentPage}
+  theme={theme}
+  setTheme={setTheme}
+/>
     
   <Toast
     toast={toast}
@@ -191,6 +243,19 @@ setToast({
         onView={setSelectedMoodCard}
 
       />
+
+   <button
+  className="theme-btn"
+  onClick={() =>
+    setTheme(
+      theme === "light"
+        ? "dark"
+        : "light"
+    )
+  }
+>
+  {theme === "light" ? "🌙" : "☀️"}
+</button>
 
     
     </div>
