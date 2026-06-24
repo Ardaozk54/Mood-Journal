@@ -1,19 +1,29 @@
 function MoodForm(props) {
   return (
     <>
-      <input
-        type="text"
-        placeholder="Type Emoji"
-        value={props.selectedEmoji}
-        onChange={(e) =>
-          props.setSelectedEmoji(e.target.value)
-        }
-      />
+     <div className="emoji-picker">
+{
+  props.emojis.map((emoji) => (
+   <button
+  key={emoji}
+  className={
+    props.selectedEmoji === emoji
+      ? "emoji-btn selected"
+      : "emoji-btn"
+  }
+  onClick={() => props.setSelectedEmoji(emoji)}
+>
+  {emoji}
+</button>
+  ))
+}
+</div>
+
 
       <select
         value={props.selectedMood}
         onChange={(e) =>
-          setSelectedMood(e.target.value)
+          props.setSelectedMood(e.target.value)
         }
       >
         <option value="">Choose Mood</option>
@@ -43,9 +53,9 @@ function MoodForm(props) {
   </small>
 </div>
 
-      {props.error && <p className="error">{props.error}</p>}
+   
 
-           <button onClick={props.addMood}>Add Mood</button>
+           <button className="add-btn" onClick={props.addMood}>Add Mood</button>
 
 
     </>
