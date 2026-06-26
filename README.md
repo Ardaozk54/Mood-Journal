@@ -1,16 +1,65 @@
-# React + Vite
+# 🌸 Mini Emoji Mood Journal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and elegant mood tracking app built with React. Log your daily emotions, add notes, and review your mood history — all saved locally in your browser.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-Custom-ec4899)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- **Emoji Picker** — Choose an emoji that matches your mood
+- **Mood Categories** — Happy, Normal, Sad, Angry, Tired, Stressed
+- **Notes** — Write how you're feeling (up to 200 characters)
+- **Filter by Mood** — Browse entries by mood type
+- **Pagination** — Neatly paginated mood history
+- **Dark / Light Mode** — Smooth theme switching, saved to localStorage
+- **Toast Notifications** — Instant feedback on actions
+- **Mood Detail Modal** — Click any card to see full details
+- **Persistent Storage** — All data saved in localStorage, nothing is lost on refresh
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- [React 19](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- CSS (no UI library — fully custom)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/Ardaozk54/Mood-Journal.git
+cd Mood-Journal
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── MoodCard.jsx      # Individual mood card
+│   ├── MoodForm.jsx      # Add new mood form
+│   ├── MoodList.jsx      # Grid of mood cards + pagination
+│   ├── MoodModal.jsx     # Full detail modal
+│   ├── MoodNavbar.jsx    # Filter navbar + theme toggle
+│   └── Toast.jsx         # Notification toast
+├── App.jsx               # Main app logic & state
+├── App.css               # All styles
+└── main.jsx
+```
+
+> Light mode and dark mode supported.
+
+## 🙋‍♂️ Author
+
+**Arda Özkan** — [@Ardaozk54](https://github.com/Ardaozk54)
+
+---
+
+*First React project — built to learn hooks, component structure, and localStorage.* 🚀
