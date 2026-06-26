@@ -1,33 +1,25 @@
-function MoodNavbar(props) {
+function MoodNavbar({ moodTypes, moods, selectedFilter, setSelectedFilter, theme, setTheme }) {
   return (
     <div className="mood-navbar">
-
-      {props.moodTypes.map((type) => {
-
-        const count =
-          type === "All"
-            ? props.moods.length
-            : props.moods.filter(
-                mood => mood.mood === type
-              ).length;
-
+      {moodTypes.map((type) => {
+        const count = type === "All" ? moods.length : moods.filter((m) => m.mood === type).length;
         return (
           <button
             key={type}
-            className={
-              props.selectedFilter === type
-                ? "filter-btn active"
-                : "filter-btn"
-            }
-            onClick={() =>
-              props.setSelectedFilter(type)
-            }
+            className={selectedFilter === type ? "filter-btn active" : "filter-btn"}
+            onClick={() => setSelectedFilter(type)}
           >
             {type} ({count})
           </button>
         );
       })}
 
+      <button
+        className="theme-btn"
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      >
+        {theme === "light" ? "🌙" : "☀️"}
+      </button>
     </div>
   );
 }

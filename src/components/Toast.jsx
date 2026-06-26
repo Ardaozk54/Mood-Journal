@@ -1,15 +1,11 @@
-function Toast(props){
+function Toast({ toast }) {
+  if (!toast.message) return null;
 
-if(!props.toast.message){
-    return null;
-}
-return(
-    <div className= {`toast ${props.toast.type}`}>
-      {props.toast.message}
+  return (
+    <div className={`toast ${toast.type}`}>
+      {toast.message}
     </div>
-)
-
+  );
 }
 
 export default Toast;
-

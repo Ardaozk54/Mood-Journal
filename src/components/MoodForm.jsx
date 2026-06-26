@@ -1,31 +1,19 @@
-function MoodForm(props) {
+function MoodForm({ emojis, selectedEmoji, setSelectedEmoji, selectedMood, setSelectedMood, selectedDate, setSelectedDate, note, setNote, addMood }) {
   return (
     <>
-     <div className="emoji-picker">
-{
-  props.emojis.map((emoji) => (
-   <button
-  key={emoji}
-  className={
-    props.selectedEmoji === emoji
-      ? "emoji-btn selected"
-      : "emoji-btn"
-  }
-  onClick={() => props.setSelectedEmoji(emoji)}
->
-  {emoji}
-</button>
-  ))
-}
-</div>
+      <div className="emoji-picker">
+        {emojis.map((emoji) => (
+          <button
+            key={emoji}
+            className={selectedEmoji === emoji ? "emoji-btn selected" : "emoji-btn"}
+            onClick={() => setSelectedEmoji(emoji)}
+          >
+            {emoji}
+          </button>
+        ))}
+      </div>
 
-
-      <select
-        value={props.selectedMood}
-        onChange={(e) =>
-          props.setSelectedMood(e.target.value)
-        }
-      >
+      <select value={selectedMood} onChange={(e) => setSelectedMood(e.target.value)}>
         <option value="">Choose Mood</option>
         <option value="Happy">Happy</option>
         <option value="Normal">Normal</option>
@@ -34,38 +22,25 @@ function MoodForm(props) {
         <option value="Tired">Tired</option>
         <option value="Stressed">Stressed</option>
       </select>
-      <input type="date" value={props.selectedDate} onChange={(e)=>props.setSelectedDate(e.target.value)} />
+
+      <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
 
       <textarea
-  placeholder="How do you feel today?"
-  value={props.note}
-  maxLength={200}
-  onChange={(e) => props.setNote(e.target.value)}
+        placeholder="How do you feel today?"
+        value={note}
+        maxLength={200}
+        onChange={(e) => setNote(e.target.value)}
+      />
 
-/>   
+      <div className="note-header">
+        <small>{note.length}/200</small>
+      </div>
 
-
-<div className="note-header">
-  <label></label>
-
-  <small>
-    {props.note.length}/200
-  </small>
-</div>
-
-   
-
-           <button className="add-btn" onClick={props.addMood}>Add Mood</button>
-
-
+      <button className="add-btn" onClick={addMood}>
+        Add Mood
+      </button>
     </>
-
-    
   );
 }
+
 export default MoodForm;
-
-
-
-
-

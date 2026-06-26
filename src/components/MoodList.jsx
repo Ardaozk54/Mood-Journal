@@ -1,66 +1,37 @@
 import MoodCard from "./MoodCard";
 
-function MoodList(props) {
+function MoodList({ moods, onDelete, onView, totalPages, currentPage, setCurrentPage }) {
   return (
     <>
-    <div className="mood-list">
-      {props.moods.length === 0 ? (
-        <p className="error" style={{ textAlign: "center" }}>
-          There are no any records.
-        </p>
-      ) : (
-        props.moods.map((mood) => (
-          <MoodCard
-            key={mood.id}
-            mood={mood}
-            onDelete={props.onDelete}
-            onView={props.onView}
-          />
-        ))
-      )}
-     
+      <div className="mood-list">
+        {moods.length === 0 ? (
+          <p className="error" style={{ textAlign: "center" }}>There are no any records.</p>
+        ) : (
+          moods.map((mood) => (
+            <MoodCard key={mood.id} mood={mood} onDelete={onDelete} onView={onView} />
+          ))
+        )}
       </div>
-       {props.totalPages > 1 && (
-  <div className="pagination">
 
-    <button
-      onClick={() =>
-        props.setCurrentPage(props.currentPage - 1)
-      }
-      disabled={props.currentPage === 1}
-    >
-      ←
-    </button>
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>←</button>
 
- <div className="page-numbers">
-  {[...Array(props.totalPages)].map((_, index) => (
-    <button
-      key={index + 1}
-      className={
-        props.currentPage === index + 1
-          ? "page-btn active"
-          : "page-btn"
-      }
-      onClick={() =>
-        props.setCurrentPage(index + 1)
-      }
-    >
-      {index + 1}
-    </button>
-  ))}
-</div>
+          <div className="page-numbers">
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i + 1}
+                className={currentPage === i + 1 ? "page-btn active" : "page-btn"}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
 
-    <button 
-      onClick={() =>
-        props.setCurrentPage(props.currentPage + 1)
-      }
-      disabled={props.currentPage === props.totalPages}
-    >
-      →
-    </button>
-
-  </div>
-)}
+          <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>→</button>
+        </div>
+      )}
     </>
   );
 }
